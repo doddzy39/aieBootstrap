@@ -3,6 +3,7 @@
 #include "Audio.h"
 #include <al.h>
 #include <alc.h>
+#include <cstring>
 
 namespace aie {
 

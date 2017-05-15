@@ -1,5 +1,7 @@
 # Specify the minimum CMAKE version required
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
+
+set(CMAKE_CXX_STANDARD 11)
 
 # Your project's name
 project(aieBootstrap)
@@ -13,8 +15,9 @@ include_directories(${CMAKE_SOURCE_DIR}/dependencies/libsndfile/include)
 include_directories(${CMAKE_SOURCE_DIR}/dependencies/openal/include)
 
 #Cmake supporting dependencies
-SET(GLFW_BUILD_EXAMPLES NO)
-SET(GLFW_BUILD_TESTS NO)
+option(GLFW_BUILD_EXAMPLES NO)
+option(GLFW_BUILD_TESTS NO)
+
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/dependencies/glfw)
 
@@ -22,5 +25,5 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/dependencies/glfw)
 file(GLOB src in ${CMAKE_SOURCE_DIR}/bootstrap/*)
 
 
-add_library(Bootstrap.lib ${src})
-target_link_libraries(Bootstrap.lib glfw3)
+add_library(Bootstrap ${src})
+target_link_libraries(Bootstrap glfw3)

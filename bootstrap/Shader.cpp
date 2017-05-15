@@ -28,13 +28,22 @@ bool Shader::loadShader(unsigned int type, const char* filename) {
 
 	// open file
 	FILE* file = nullptr;
+#ifdef _MSC_VER
 	fopen_s(&file, filename, "rb");
+#else
+	file = fopen(filename, "rb");
+#endif
 	fseek(file, 0, SEEK_END);
 	unsigned int size = ftell(file);
 	char* source = new char[size + 1];
 	fseek(file, 0, SEEK_SET);
+#ifdef _MSC_VER
 	fread_s(source, size + 1, sizeof(char), size, file);
+#else
+	fread(source, size + 1, size, file);
+#endif
 	fclose(file);
+	
 	source[size] = 0;
 
 	glShaderSource(*shader, 1, (const char**)&source, 0);

@@ -145,8 +145,10 @@ void Application::setVSync(bool enable) {
 		glfwSwapInterval(0);
 }
 
-void Application::setShowCursor(bool visible) {
-	ShowCursor(visible);
+void Application::setShowCursor(bool visible) 
+{
+    auto mode = visible ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN;
+	glfwSetInputMode(m_window, GLFW_CURSOR, mode);
 }
 
 unsigned int Application::getWindowWidth() const {
