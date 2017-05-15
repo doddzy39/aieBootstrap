@@ -20,7 +20,7 @@ bool Application2D::startup() {
 
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 
-	m_audio = new aie::Audio("./audio/powerup.wav");
+//	m_audio = new aie::Audio("./audio/powerup.wav");
 
 	m_cameraX = 0;
 	m_cameraY = 0;
@@ -31,7 +31,7 @@ bool Application2D::startup() {
 
 void Application2D::shutdown() {
 	
-	delete m_audio;
+//	delete m_audio;
 	delete m_font;
 	delete m_texture;
 	delete m_shipTexture;
@@ -59,8 +59,8 @@ void Application2D::update(float deltaTime) {
 		m_cameraX += 500.0f * deltaTime;
 
 	// example of audio
-	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
-		m_audio->play();
+//	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
+//		m_audio->play();
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))

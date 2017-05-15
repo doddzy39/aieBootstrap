@@ -117,7 +117,7 @@ void Application::run(const char* title, int width, int height, bool fullscreen)
 			ImGui_NewFrame();
 
 			update(float(deltaTime));
-            SoundManager::getInstance()->update();
+//			SoundManager::getInstance()->update();
 			draw();
 
 			// draw IMGUI last
