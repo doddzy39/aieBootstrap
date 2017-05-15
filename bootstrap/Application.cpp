@@ -3,7 +3,6 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <iostream>
-#include "RenderTarget.h"
 #include "Input.h"
 #include "imgui_glfw3.h"
 
@@ -12,8 +11,7 @@ namespace aie {
 Application::Application()
 	: m_window(nullptr),
 	m_gameOver(false),
-	m_fps(0),
-	m_currentRenderTarget(nullptr) {
+	m_fps(0) {
 }
 
 Application::~Application() {
@@ -96,6 +94,16 @@ void Application::run(const char* title, int width, int height, bool fullscreen)
 			deltaTime = currTime - prevTime;
 			prevTime = currTime;
 
+			// clear input
+			Input::getInstance()->clearStatus();
+
+			// update window events (input etc)
+			glfwPollEvents();
+
+			// skip if minimised
+			if (glfwGetWindowAttrib(m_window, GLFW_ICONIFIED) != 0)
+				continue;
+
 			// update fps every second
 			frames++;
 			fpsInterval += deltaTime;
@@ -105,13 +113,11 @@ void Application::run(const char* title, int width, int height, bool fullscreen)
 				fpsInterval -= 1.0f;
 			}
 
-			// update window events (input etc)
-			glfwPollEvents();
-
 			// clear imgui
 			ImGui_NewFrame();
 
 			update(float(deltaTime));
+            SoundManager::getInstance()->update();
 			draw();
 
 			// draw IMGUI last
@@ -167,28 +173,8 @@ unsigned int Application::getWindowHeight() const {
 	return h;
 }
 
-unsigned int Application::getViewWidth() const {
-	if (m_currentRenderTarget != nullptr)
-		return m_currentRenderTarget->getWidth();
-	else
-		return getWindowWidth();
-}
-
-unsigned int Application::getViewHeight() const {
-	if (m_currentRenderTarget != nullptr)
-		return m_currentRenderTarget->getHeight();
-	else
-		return getWindowHeight();
-}
-
-void Application::setRenderTarget(RenderTarget* renderTarget) {
-	m_currentRenderTarget = renderTarget;
-	if (m_currentRenderTarget != nullptr) {
-		glBindFramebuffer(GL_FRAMEBUFFER, m_currentRenderTarget->getFrameBufferHandle());
-	}
-	else {
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
+float Application::getTime() const {
+	return (float)glfwGetTime();
 }
 
 } // namespace aie

@@ -180,11 +180,11 @@ void Renderer2D::end() {
 	m_renderBegun = false;
 }
 
-void Renderer2D::drawBox(float xPos, float yPos, float width, float height, float rotation) {
-	drawSprite(nullptr, xPos, yPos, width, height, rotation);
+void Renderer2D::drawBox(float xPos, float yPos, float width, float height, float rotation, float depth) {
+	drawSprite(nullptr, xPos, yPos, width, height, rotation, depth);
 }
 
-void Renderer2D::drawCircle(float xPos, float yPos, float radius) {
+void Renderer2D::drawCircle(float xPos, float yPos, float radius, float depth) {
 
 	if (shouldFlush(33,96))
 		flushBatch();
@@ -195,7 +195,7 @@ void Renderer2D::drawCircle(float xPos, float yPos, float radius) {
 	// centre vertex
 	m_vertices[m_currentVertex].pos[0] = xPos;
 	m_vertices[m_currentVertex].pos[1] = yPos;
-	m_vertices[m_currentVertex].pos[2] = 0;
+	m_vertices[m_currentVertex].pos[2] = depth;
 	m_vertices[m_currentVertex].pos[3] = (float)textureID;
 	m_vertices[m_currentVertex].color[0] = m_r;
 	m_vertices[m_currentVertex].color[1] = m_g;
@@ -215,7 +215,7 @@ void Renderer2D::drawCircle(float xPos, float yPos, float radius) {
 
 		m_vertices[m_currentVertex].pos[0] = glm::sin(rotDelta * i) * radius + xPos;
 		m_vertices[m_currentVertex].pos[1] = glm::cos(rotDelta * i) * radius + yPos;
-		m_vertices[m_currentVertex].pos[2] = 0;
+		m_vertices[m_currentVertex].pos[2] = depth;
 		m_vertices[m_currentVertex].pos[3] = (float)textureID;
 		m_vertices[m_currentVertex].color[0] = m_r;
 		m_vertices[m_currentVertex].color[1] = m_g;
@@ -660,6 +660,10 @@ void Renderer2D::flushBatch() {
 		glUniform1i(glGetUniformLocation(m_shader, buf), m_fontTexture[i]);
 	}
 
+	int depthFunc = GL_LESS;
+	glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
+	glDepthFunc(GL_LEQUAL);
+
 	glBindVertexArray(m_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
@@ -670,6 +674,8 @@ void Renderer2D::flushBatch() {
 	glDrawElements(GL_TRIANGLES, m_currentIndex, GL_UNSIGNED_SHORT, 0);
 
 	glBindVertexArray(0);
+
+	glDepthFunc(depthFunc);
 
 	// clear the active textures
 	for (unsigned int i = 0; i < m_currentTexture; i++) {

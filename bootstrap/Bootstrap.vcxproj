@@ -94,15 +94,11 @@
     <ClCompile Include="..\dependencies\imgui\imgui.cpp" />
     <ClCompile Include="..\dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="gl_core_4_4.c" />
     <ClCompile Include="imgui_glfw3.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="OBJMesh.cpp" />
-    <ClCompile Include="RenderTarget.cpp" />
-    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Renderer2D.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
@@ -111,15 +107,11 @@
     <ClInclude Include="..\dependencies\imgui\imgui.h" />
     <ClInclude Include="..\dependencies\imgui\imgui_internal.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Gizmos.h" />
     <ClInclude Include="gl_core_4_4.h" />
     <ClInclude Include="imgui_glfw3.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="OBJMesh.h" />
-    <ClInclude Include="RenderTarget.h" />
-    <ClInclude Include="Shader.h" />
     <ClInclude Include="Renderer2D.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
