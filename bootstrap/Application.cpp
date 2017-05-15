@@ -5,7 +5,6 @@
 #include <iostream>
 #include "RenderTarget.h"
 #include "Input.h"
-#include "SoundManager.h"
 #include "imgui_glfw3.h"
 
 namespace aie {
@@ -24,6 +23,15 @@ bool Application::createWindow(const char* title, int width, int height, bool fu
 
 	if (glfwInit() == GL_FALSE)
 		return false;
+
+#ifndef _MSC_VER
+		//Following is required to for OpenGL 3.2 on Mac hardware
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+
 
 	m_window = glfwCreateWindow(width, height, title, (fullscreen ? glfwGetPrimaryMonitor() : nullptr), nullptr);
 	if (m_window == nullptr) {
@@ -52,9 +60,6 @@ bool Application::createWindow(const char* title, int width, int height, bool fu
 	// start input manager
 	Input::create();
 
-	// start sound manager
-	SoundManager::create();
-
 	// imgui
 	ImGui_Init(m_window, true);
 	
@@ -64,7 +69,6 @@ bool Application::createWindow(const char* title, int width, int height, bool fu
 void Application::destroyWindow() {
 
 	ImGui_Shutdown();
-	SoundManager::destroy();
 	Input::destroy();
 
 	glfwDestroyWindow(m_window);

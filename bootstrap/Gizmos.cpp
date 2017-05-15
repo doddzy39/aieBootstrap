@@ -45,6 +45,19 @@ Gizmos::Gizmos(unsigned int maxLines, unsigned int maxTris,
 	glShaderSource(vs, 1, (const char**)&vsSource, 0);
 	glCompileShader(vs);
 
+	int shaderSuccess = GL_FALSE;
+	glGetShaderiv(vs, GL_COMPILE_STATUS, &shaderSuccess);
+	if(shaderSuccess == GL_FALSE)
+	{
+		int infoLogLength = 0;
+		glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &infoLogLength);
+		char* infoLog = new char[infoLogLength + 1];
+
+		glGetShaderInfoLog(vs, infoLogLength, 0, infoLog);
+		printf("Shader failed to compile:%s", infoLog);
+		delete[] infoLog;
+	}
+
 	glShaderSource(fs, 1, (const char**)&fsSource, 0);
 	glCompileShader(fs);
 
