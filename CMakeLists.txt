@@ -27,3 +27,7 @@ file(GLOB src in ${CMAKE_SOURCE_DIR}/bootstrap/*)
 
 add_library(Bootstrap ${src})
 target_link_libraries(Bootstrap glfw3)
+
+
+target_include_directories(Bootstrap PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
