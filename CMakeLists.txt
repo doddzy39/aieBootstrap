@@ -1,7 +1,6 @@
 # Specify the minimum CMAKE version required
-cmake_minimum_required(VERSION 3.1)
-
-set(CMAKE_CXX_STANDARD 11)
+cmake_minimum_required(VERSION 3.2)
+set(CMAKE_CXX_STANDARD 14)
 
 # Your project's name
 project(aieBootstrap)
@@ -13,7 +12,6 @@ include_directories(${PROJECT_SOURCE_DIR}/dependencies/glm)
 include_directories(${PROJECT_SOURCE_DIR}/dependencies/imgui)
 include_directories(${PROJECT_SOURCE_DIR}/dependencies/stb)
 include_directories(${PROJECT_SOURCE_DIR}/dependencies/glfw/include)
-include_directories(${PROJECT_SOURCE_DIR}/dependencies/libsndfile/include)
 include_directories(${PROJECT_SOURCE_DIR}/dependencies/openal/include)
 
 SET(GLM_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/dependencies/glm CACHE PATH "GLM Include Path")
@@ -33,11 +31,14 @@ set( IMGUI_SRC
    dependencies/imgui/imgui_draw.cpp
 )
 
-add_library(Bootstrap ${src} ${IMGUI_SRC})
-target_link_libraries(Bootstrap glfw)
+add_library(aieBootstrap ${src} ${IMGUI_SRC})
+target_link_libraries(aieBootstrap glfw)
 
-target_include_directories(Bootstrap PUBLIC
+target_include_directories(aieBootstrap PUBLIC
     ${PROJECT_SOURCE_DIR}/bootstrap
 )
 
- target_link_libraries(Bootstrap ${OPENGL_gl_LIBRARY})
+ target_link_libraries(aieBootstrap ${OPENGL_gl_LIBRARY})
+
+ #Update the line below to select which project to build
+ add_subdirectory(project3D)

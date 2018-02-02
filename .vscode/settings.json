@@ -1,0 +1,7 @@
+{
+    "cquery.launch.workingDirectory": "/home/matt/code/cquery/build",
+    "cquery.cacheDirectory": "/home/matt/code/aie/checkers_unit_testing/.vscode/cquery_cached_index/",
+    "cmake.configureArgs": [
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=YES"
+    ],
+}

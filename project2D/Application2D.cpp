@@ -3,6 +3,8 @@
 #include "Input.h"
 #include "Texture.h"
 
+#include <cmath>
+
 Application2D::Application2D() {}
 
 Application2D::~Application2D() {}
@@ -80,7 +82,7 @@ void Application2D::draw() {
 
   // draw a moving purple circle
   m_2dRenderer->setRenderColour(1, 0, 1, 1);
-  m_2dRenderer->drawCircle(sin(m_timer) * 100 + 600, 150, 50);
+  m_2dRenderer->drawCircle(std::sin(m_timer) * 100 + 600, 150, 50);
 
   // draw a rotating red box
   m_2dRenderer->setRenderColour(1, 0, 0, 1);
@@ -92,7 +94,7 @@ void Application2D::draw() {
 
   // output some text, uses the last used colour
   char fps[32];
-  sprintf_s(fps, 32, "FPS: %i", getFPS());
+  sprintf(fps, "FPS: %i", getFPS());
   m_2dRenderer->drawText(m_font, fps, 0, 720 - 32);
   m_2dRenderer->drawText(m_font, "Press ESC to quit!", 0, 720 - 64);
 
